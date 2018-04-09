@@ -1,5 +1,5 @@
 import numpy as np
-import math
+from math import sqrt, acos, degrees, cos, fabs, sin
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
@@ -22,14 +22,18 @@ class Angel:
 
 
 class Vector2D:
-    # Class making my vectors the bestors
-    def __init__(self, x=0, y=0):
+    # Class making my vectors the bestors   ...
+    def __init__(self, x=0, y=0, angle=0, leng=0):
         self.x = x
         self.y = y
+        self.angle = angle
+        self.leng = leng
+        if self.angle > 0 and self.leng > 0:
+            self.get_vector_from_angle()
         self.vec = (self.x, self.y)
 
     def length(self):
-        return math.sqrt((self.x ** 2) + (self.y ** 2))
+        return sqrt((self.x ** 2) + (self.y ** 2))
 
     def get(self):
         return self.vec
@@ -51,7 +55,7 @@ class Vector2D:
     def dist(self, vec):
         x2 = vec.x - self.x
         y2 = vec.y - self.y
-        return math.sqrt(abs(x2 ** 2) + abs(y2 ** 2))
+        return sqrt(abs(x2 ** 2) + abs(y2 ** 2))
 
     def multi(self, t):
         # T is multiplier
@@ -67,7 +71,9 @@ class Vector2D:
         y = self.y * vec.y
         return x + y
 
-
+    def get_vector_from_angle(self):
+        self.x = self.leng * cos(self.angle)
+        self.y = self.leng * sin(self.angle)
     """
         Find coordinator via vinkel
         |a| * cos(v) = a1
@@ -82,21 +88,15 @@ class Vector2D:
         # cos(v) = A.x * B.x + A.y * B.y / |A|*|B|
         A = (self.x * vecB.x) + (self.y * vecB.y)
         B = np.sqrt(self.x**2 + self.y**2) * np.sqrt(vecB.x**2 + vecB.y**2)
-        v = math.acos(float(A)/float(B))
+        v = acos(float(A)/float(B))
         if p:
             print("\n[{}]A = ([{}]self.x * [{}]vecB.x) + ([{}]self.y * [{}]vecB.y)".format(A,self.x,vecB.x,self.y,vecB.y))
             print("[{}]B = np.sqrt([{}]self.x ** 2 + [{}]self.y ** 2) * np.sqrt([{}]vecB.x ** 2 + "
                   "[{}]vecB.y ** 2)".format(B,self.x**2,self.y**2,vecB.x**2,vecB.y**2))
             print("[{}]v = math.acos([{}]float(A) / [{}]float(B))".format(v,A,B))
-            print("v in degress: [{}] ".format(math.degrees(v)))
+            print("v in degress: [{}] ".format(degrees(v)))
 
-
-            """
-            #print("{}*{}+{}*{}".format(self.x,vecB.x,self.y,vecB.y))
-            print("\nsqrt({}+{}*{}+{})".format(round(self.x**2,2),round(self.y**2,2),round(vecB.x**2,2),round(vecB.y**2,2)))
-            print("{} / {} = acos({}) = {}\n".format(round(A,2),round(B,2),round(v,2),round(math.degrees(v),2)))
-            """
-        return math.degrees(v)
+        return degrees(v)
 
     def get_x_deg(self, deg):
         a = self.length()
@@ -112,7 +112,7 @@ class Vector2D:
         # Projektering af en vektor på en vektor S36A (sætning 10)
         # kan findes som skalarproduktet af (a*b/|b|^2)*b
         upper = self.x*vecB.x+self.y*vecB.y
-        lower = math.fabs(vecB.x**2+vecB.y**2)
+        lower = fabs(vecB.x**2+vecB.y**2)
         Vx = upper * vecB.x
         Vy = upper * vecB.y
         print("{}*{}\n____\n{}".format(upper,vecB.x,lower))
@@ -137,7 +137,7 @@ class Vector2D:
     def areal(self,vecB):
         c=self.determinant(vecB)
 
-        print(math.fabs(c))
+        print(fabs(c))
 
     def show_vector(self, vecB=0):
         V = np.array([[self.x, self.y]])

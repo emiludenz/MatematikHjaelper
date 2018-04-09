@@ -9,9 +9,9 @@ class Vector3D:
         self.vec = (self.x, self.y,self.z)
 
     def out(self):
-        print("x:{}  y:{}  z:{}".format(self.x,self.y,self.z))
+        print("x:{}  y:{}  z:{}".format(self.x, self.y, self.z))
 
-    def add(self,vec=0):
+    def add(self, vec=0):
         if vec == 0:
             other_vec = Vector3D()
         else:
@@ -19,7 +19,7 @@ class Vector3D:
         x = self.x + other_vec.x
         y = self.y + other_vec.y
         z = self.z + other_vec.z
-        return Vector3D(x,y,z)
+        return Vector3D(x, y, z)
 
     def sub(self, vec=0):
         if vec == 0:
@@ -46,7 +46,7 @@ class Vector3D:
             lengde = (self.x ** 2) + (self.y ** 2) + (self.z ** 2)
             return sq(lengde)
         else:
-            lengde = (vec.x-self.x ) ** 2 + ( vec.y-self.y) ** 2 + ( vec.z-self.z) ** 2
+            lengde = (vec.x - self.x) ** 2 + (vec.y - self.y) ** 2 + (vec.z - self.z) ** 2
             return sq(lengde)
 
     def areal_parallellogram(self, vec=0):
@@ -71,21 +71,17 @@ class Vector3D:
 
     def vinkel(self,vec=0):
         if vec == 0:
-            other_vec = Vector3D()
-        else:
-            other_vec = vec
+            vec = Vector3D()
         # skalar produktet
-        skalar_p = self.skaler_produkt(other_vec)
+        skalar_p = self.skaler_produkt(vec)
         # længden af de to vektorer
-        lengde_p = self.lengde()*other_vec.lengde()
+        lengde_p = self.lengde()*vec.lengde()
         return degrees(acos(skalar_p/lengde_p))
 
     def krydsprodukt(self,vec=0):
         if vec == 0:
-            other_vec = Vector3D(0,0,0)
-        else:
-            other_vec = vec
-        x = self.y*other_vec.z - self.z*other_vec.y
-        y = (self.z*other_vec.x - self.x*other_vec.z)
-        z = self.x*other_vec.y - self.y*other_vec.x
-        return Vector3D(x,y,z)
+            vec = Vector3D(0,0,0)
+        x = self.y*vec.z - self.z*vec.y
+        y = (self.z*vec.x - self.x*vec.z)
+        z = self.x*vec.y - self.y*vec.x
+        return Vector3D(x, y, z)
