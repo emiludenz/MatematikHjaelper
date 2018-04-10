@@ -26,9 +26,9 @@ class Vector3D:
             other_vec = Vector3D()
         else:
             other_vec = vec
-        x = self.x - other_vec.x
-        y = self.y - other_vec.y
-        z = self.z - other_vec.z
+        x = other_vec.x- self.x
+        y = other_vec.y -self.y
+        z = other_vec.z - self.z
         return Vector3D(x, y, z)
 
     def skaler_produkt(self,vec=0):
@@ -74,14 +74,22 @@ class Vector3D:
             vec = Vector3D()
         # skalar produktet
         skalar_p = self.skaler_produkt(vec)
+        print(skalar_p)
         # længden af de to vektorer
         lengde_p = self.lengde()*vec.lengde()
+        print(lengde_p)
         return degrees(acos(skalar_p/lengde_p))
 
     def krydsprodukt(self,vec=0):
         if vec == 0:
             vec = Vector3D(0,0,0)
         x = self.y*vec.z - self.z*vec.y
-        y = (self.z*vec.x - self.x*vec.z)
+        y = self.z*vec.x - self.x*vec.z
         z = self.x*vec.y - self.y*vec.x
         return Vector3D(x, y, z)
+
+    def get(self):
+        return (self.x,self.y,self.z)
+
+
+
